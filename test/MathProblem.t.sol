@@ -42,8 +42,22 @@ assert(100*x- y * 2 != 3268);
 }
 
 
-// forge test --mt test_Answer -vv
-function test_Answer(uint256 x , uint256 y) public pure {
+//////// generate CounterExamples
+// forge test --mt test_find_solution 
+function test_find_solution(uint256 x , uint256 y) public pure {
+solve(x, y);
+}
+
+// This is pretty fast  :) 
+// halmos --function check_find_solution  --solver-timeout-assertion 0 
+function check_find_solution(uint256 x , uint256 y) public pure {
+solve(x, y);
+}
+
+
+/////////////  verify answer
+// forge test --mt test_solution 
+function test_solution(uint256 x , uint256 y) public pure {
  vm.assume(x != 33 && y != 16);
   vm.assume(x != 34 && y != 66);
 solve(x, y);
@@ -52,8 +66,8 @@ solve(x, y);
 
 
 // This is pretty fast  :) 
-// halmos --function check_Answer  --solver-timeout-assertion 0 
-function check_Answer(uint256 x , uint256 y) public pure {
+// halmos --function check_solution  --solver-timeout-assertion 0 
+function check_solution(uint256 x , uint256 y) public pure {
  vm.assume(x != 33 && y != 16);
   vm.assume(x != 34 && y != 66);
 solve(x, y);
